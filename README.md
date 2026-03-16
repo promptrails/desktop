@@ -1,6 +1,6 @@
 # PromptRails Monitor
 
-Desktop monitoring app for PromptRails AI agent executions. Built with Tauri v2, React, and TypeScript.
+Desktop monitoring app for PromptRails AI agent executions.
 
 ## Features
 
