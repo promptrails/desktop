@@ -1,5 +1,5 @@
 use tauri::menu::{MenuBuilder, MenuItemBuilder};
-use tauri::tray::{MouseButton, MouseButtonState, TrayIconEvent, TrayIconId};
+use tauri::tray::{MouseButton, MouseButtonState, TrayIconEvent};
 use tauri::{AppHandle, Manager, PhysicalPosition};
 
 pub fn setup_tray_menu(app: &AppHandle) -> Result<(), Box<dyn std::error::Error>> {
@@ -32,7 +32,7 @@ pub fn setup_tray_menu(app: &AppHandle) -> Result<(), Box<dyn std::error::Error>
                 ..
             } = event
             {
-                toggle_tray_panel(tray.app_handle(), &tray.id(), position);
+                toggle_tray_panel(tray.app_handle(), position);
             }
         });
     }
@@ -40,11 +40,7 @@ pub fn setup_tray_menu(app: &AppHandle) -> Result<(), Box<dyn std::error::Error>
     Ok(())
 }
 
-fn toggle_tray_panel(
-    app: &AppHandle,
-    _tray_id: &TrayIconId,
-    click_pos: PhysicalPosition<f64>,
-) {
+fn toggle_tray_panel(app: &AppHandle, click_pos: PhysicalPosition<f64>) {
     if let Some(panel) = app.get_webview_window("tray-panel") {
         if panel.is_visible().unwrap_or(false) {
             let _ = panel.hide();
