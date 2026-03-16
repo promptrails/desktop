@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { useDashboardMetrics } from "../hooks/useDashboard";
 import { StatCard } from "../components/StatCard";
+import { PeriodTabs } from "../components/PeriodTabs";
 import { formatCost, formatDuration, formatTokens } from "../lib/utils";
 import { Activity, CheckCircle, DollarSign, Clock, Zap } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function Stats() {
-  const { data: metrics, isLoading, error } = useDashboardMetrics(7);
+  const [days, setDays] = useState(7);
+  const { data: metrics, isLoading, error } = useDashboardMetrics(days);
 
   if (isLoading) {
     return (
@@ -33,9 +36,9 @@ export default function Stats() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="border-b border-border px-4 py-3">
+      <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <h1 className="text-sm font-semibold">Dashboard</h1>
-        <p className="text-xs text-muted-foreground">Last 7 days</p>
+        <PeriodTabs value={days} onChange={setDays} />
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
@@ -62,7 +65,6 @@ export default function Stats() {
           />
         </div>
 
-        {/* Executions by day chart */}
         {metrics.executions_by_day && metrics.executions_by_day.length > 0 && (
           <div className="mt-6">
             <p className="mb-3 text-xs font-medium text-muted-foreground">
@@ -86,7 +88,6 @@ export default function Stats() {
           </div>
         )}
 
-        {/* Top agents */}
         {metrics.agent_usage && metrics.agent_usage.length > 0 && (
           <div className="mt-6">
             <p className="mb-3 text-xs font-medium text-muted-foreground">Top Agents</p>
@@ -122,7 +123,6 @@ export default function Stats() {
           </div>
         )}
 
-        {/* Token usage */}
         {overview.total_tokens > 0 && (
           <div className="mt-6">
             <StatCard
