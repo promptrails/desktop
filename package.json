@@ -16,7 +16,7 @@
     "validate": "pnpm typecheck && pnpm lint && pnpm format:check"
   },
   "dependencies": {
-    "@promptrails/sdk": "file:../javascript-sdk",
+    "@promptrails/sdk": "^0.9.0",
     "@tanstack/react-query": "^5.75.5",
     "@tauri-apps/api": "^2.5.0",
     "@tauri-apps/plugin-notification": "^2.2.2",

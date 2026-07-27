@@ -47,22 +47,24 @@ See [docs/](docs/) for configuration, development, and build-from-source guides.
 
 ## SDK dependency (temporary)
 
-This app targets PromptRails **API v2** via `@promptrails/sdk` v0.9.0, which is
-not yet published to npm. Until the coordinated SDK release, `package.json`
-points at the sibling checkout:
+This app targets PromptRails **API v2** via `@promptrails/sdk` `^0.9.0`, which is
+not yet published to npm. Because the version cannot be resolved from the
+registry yet, the committed `pnpm-lock.yaml` is intentionally **stale** — it
+still pins the previous `0.5.0` line and does not resolve `^0.9.0`. This is
+expected and will be reconciled (`pnpm install`) once the SDK publishes to npm.
 
-```json
-"@promptrails/sdk": "file:../javascript-sdk"
-```
-
-Build the SDK before installing:
+To build/validate locally against the unreleased SDK, build the sibling
+checkout and link it (do **not** commit the link or an override):
 
 ```bash
-cd ../javascript-sdk && npm ci && npm run build
+cd ../javascript-sdk && npm ci && npm run build   # build the v0.9.0 SDK
+cd -                                              # back to the desktop app
+pnpm link ../javascript-sdk                        # local-only link
 ```
 
-**TODO:** repin `@promptrails/sdk` to the published npm version at the
-coordinated v2 release.
+**TODO:** at the coordinated v2 release, publish `@promptrails/sdk` 0.9.x, then
+run `pnpm install` here to regenerate the lockfile against the published
+version and remove the local link.
 
 ## License
 
