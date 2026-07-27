@@ -1,14 +1,22 @@
+import {
+  Activity,
+  AlertTriangle,
+  CheckCircle,
+  Clock,
+  DollarSign,
+  Layers,
+  Users,
+  Zap,
+} from "lucide-react";
 import { useState } from "react";
-import { useDashboardMetrics } from "../hooks/useDashboard";
-import { StatCard } from "../components/StatCard";
 import { PeriodTabs } from "../components/PeriodTabs";
+import { StatCard } from "../components/StatCard";
+import { useTraceSummary } from "../hooks/useStats";
 import { formatCost, formatDuration, formatTokens } from "../lib/utils";
-import { Activity, CheckCircle, DollarSign, Clock, Zap } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function Stats() {
   const [days, setDays] = useState(7);
-  const { data: metrics, isLoading, error } = useDashboardMetrics(days);
+  const { data: summary, isLoading, error } = useTraceSummary(days);
 
   if (isLoading) {
     return (
@@ -18,18 +26,16 @@ export default function Stats() {
     );
   }
 
-  if (error || !metrics) {
+  if (error || !summary) {
     return (
-      <p className="px-4 py-8 text-center text-sm text-red-500">Failed to load metrics</p>
+      <p className="px-4 py-8 text-center text-sm text-red-500">Failed to load stats</p>
     );
   }
 
-  const overview = metrics.overview || {};
   const successRate =
-    overview.total_executions > 0
+    summary.total_traces > 0
       ? (
-          ((overview.total_executions - (overview.error_count || 0)) /
-            overview.total_executions) *
+          ((summary.total_traces - summary.error_count) / summary.total_traces) *
           100
         ).toFixed(1)
       : "0";
@@ -37,15 +43,15 @@ export default function Stats() {
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
-        <h1 className="text-sm font-semibold">Dashboard</h1>
+        <h1 className="text-sm font-semibold">Stats</h1>
         <PeriodTabs value={days} onChange={setDays} />
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
         <div className="grid grid-cols-2 gap-3">
           <StatCard
-            title="Executions"
-            value={String(overview.total_executions || 0)}
+            title="Traces"
+            value={String(summary.total_traces)}
             icon={<Activity className="h-4 w-4" />}
           />
           <StatCard
@@ -55,83 +61,35 @@ export default function Stats() {
           />
           <StatCard
             title="Total Cost"
-            value={formatCost(overview.total_cost)}
+            value={formatCost(summary.total_cost)}
             icon={<DollarSign className="h-4 w-4" />}
           />
           <StatCard
             title="Avg Duration"
-            value={formatDuration(overview.avg_duration_ms)}
+            value={formatDuration(summary.avg_duration_ms)}
             icon={<Clock className="h-4 w-4" />}
           />
+          <StatCard
+            title="Total Tokens"
+            value={formatTokens(summary.total_tokens)}
+            icon={<Zap className="h-4 w-4" />}
+          />
+          <StatCard
+            title="Errors"
+            value={String(summary.error_count)}
+            icon={<AlertTriangle className="h-4 w-4" />}
+          />
+          <StatCard
+            title="Models"
+            value={String(summary.unique_models)}
+            icon={<Layers className="h-4 w-4" />}
+          />
+          <StatCard
+            title="Sessions"
+            value={String(summary.unique_sessions)}
+            icon={<Users className="h-4 w-4" />}
+          />
         </div>
-
-        {metrics.executions_by_day && metrics.executions_by_day.length > 0 && (
-          <div className="mt-6">
-            <p className="mb-3 text-xs font-medium text-muted-foreground">
-              Executions by Day
-            </p>
-            <ResponsiveContainer width="100%" height={160}>
-              <BarChart data={metrics.executions_by_day}>
-                <XAxis
-                  dataKey="date"
-                  tick={{ fontSize: 10 }}
-                  tickFormatter={(v: string) => v.slice(5)}
-                />
-                <YAxis tick={{ fontSize: 10 }} width={30} />
-                <Tooltip
-                  contentStyle={{ fontSize: 12 }}
-                  labelFormatter={(v: string) => v}
-                />
-                <Bar dataKey="count" fill="hsl(262, 83%, 58%)" radius={[3, 3, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        )}
-
-        {metrics.agent_usage && metrics.agent_usage.length > 0 && (
-          <div className="mt-6">
-            <p className="mb-3 text-xs font-medium text-muted-foreground">Top Agents</p>
-            <div className="space-y-2">
-              {metrics.agent_usage
-                .slice(0, 5)
-                .map(
-                  (agent: {
-                    agent_id: string;
-                    agent_name: string;
-                    executions: number;
-                    total_cost: number;
-                  }) => (
-                    <div
-                      key={agent.agent_id}
-                      className="flex items-center justify-between rounded-md border border-border p-3"
-                    >
-                      <div>
-                        <p className="text-sm font-medium">{agent.agent_name}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {agent.executions} executions
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-sm font-medium">
-                          {formatCost(agent.total_cost)}
-                        </p>
-                      </div>
-                    </div>
-                  ),
-                )}
-            </div>
-          </div>
-        )}
-
-        {overview.total_tokens > 0 && (
-          <div className="mt-6">
-            <StatCard
-              title="Total Tokens"
-              value={formatTokens(overview.total_tokens)}
-              icon={<Zap className="h-4 w-4" />}
-            />
-          </div>
-        )}
       </div>
     </div>
   );

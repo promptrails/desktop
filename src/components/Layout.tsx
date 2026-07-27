@@ -1,16 +1,16 @@
-import { NavLink } from "react-router-dom";
-import { Activity, Shield, BarChart3, Settings } from "lucide-react";
-import { cn } from "../lib/utils";
-import { useApprovals } from "../hooks/useApprovals";
-import { useExecutions } from "../hooks/useExecutions";
-import { useNotificationPrefs } from "../hooks/useSettings";
-import { useEffect, useRef } from "react";
+import { invoke } from "@tauri-apps/api/core";
 import {
   isPermissionGranted,
   requestPermission,
   sendNotification,
 } from "@tauri-apps/plugin-notification";
-import { invoke } from "@tauri-apps/api/core";
+import { Activity, BarChart3, Settings, Shield } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom";
+import { useApprovals } from "../hooks/useApprovals";
+import { useExecutions } from "../hooks/useExecutions";
+import { useNotificationPrefs } from "../hooks/useSettings";
+import { cn } from "../lib/utils";
 
 const navItems = [
   { to: "/", icon: Activity, label: "Feed" },
@@ -31,7 +31,7 @@ async function notify(title: string, body: string) {
 }
 
 function TrayStatusManager() {
-  const { data: pendingApprovals } = useApprovals("pending");
+  const { data: pendingApprovals } = useApprovals();
   const { data: executions } = useExecutions();
   const notifPrefs = useNotificationPrefs();
   const prevApprovalIds = useRef<Set<string>>(new Set());

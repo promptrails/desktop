@@ -1,15 +1,16 @@
-import { useState } from "react";
 import type { AgentExecution } from "@promptrails/sdk";
+import { useState } from "react";
+import { ExecutionRow } from "../components/ExecutionRow";
 import { useExecutions } from "../hooks/useExecutions";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
-import { ExecutionRow } from "../components/ExecutionRow";
 
 const statusOptions = [
   { value: "", label: "All Status" },
   { value: "completed", label: "Success" },
   { value: "failed", label: "Failed" },
   { value: "running", label: "Running" },
-  { value: "awaiting_approval", label: "Awaiting Approval" },
+  { value: "waiting_approval", label: "Waiting Approval" },
+  { value: "cancelled", label: "Cancelled" },
 ];
 
 export default function Feed() {

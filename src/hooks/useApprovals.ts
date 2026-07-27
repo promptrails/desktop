@@ -4,22 +4,27 @@ import { usePollingInterval } from "./useSettings";
 
 const PAGE_SIZE = 20;
 
-export function useApprovals(status?: string) {
+/**
+ * API v2: approvals are execution-scoped. The inbox lists executions parked at
+ * `waiting_approval` (an approval-gated tool call). There is no separate
+ * approval object or approved/rejected history — once decided the execution
+ * resumes and leaves the inbox.
+ */
+export function useApprovals() {
   const pollingInterval = usePollingInterval();
 
   return useInfiniteQuery({
-    queryKey: ["approvals", status],
+    queryKey: ["approvals"],
     queryFn: async ({ pageParam = 1 }) => {
       const client = getClient();
-      return client.approvals.list({
+      return client.executions.approvalInbox({
         page: pageParam,
         limit: PAGE_SIZE,
-        status,
       });
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
-      if (lastPage.meta.page < lastPage.meta.total_pages) {
+      if (lastPage.meta.page < lastPage.meta.pages) {
         return lastPage.meta.page + 1;
       }
       return undefined;
@@ -38,11 +43,13 @@ export function useDecideApproval() {
       reason,
     }: {
       id: string;
-      decision: "approved" | "rejected";
+      decision: "approve" | "deny";
       reason?: string;
     }) => {
       const client = getClient();
-      return client.approvals.decide(id, { decision, reason });
+      return decision === "approve"
+        ? client.executions.approve(id, { reason })
+        : client.executions.deny(id, { reason });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["approvals"] });
