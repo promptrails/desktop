@@ -1,6 +1,6 @@
 [package]
 name = "promptrails-monitor"
-version = "0.2.1"
+version = "0.3.0"
 description = "PromptRails Monitor - Desktop monitoring app for AI agent executions"
 authors = ["PromptRails"]
 edition = "2021"
