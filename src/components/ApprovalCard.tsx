@@ -1,41 +1,41 @@
+import type { AgentExecution } from "@promptrails/sdk";
 import { useState } from "react";
-import { StatusBadge } from "./StatusBadge";
-import { timeAgo } from "../lib/utils";
 import { useDecideApproval } from "../hooks/useApprovals";
+import { timeAgo } from "../lib/utils";
+import { StatusBadge } from "./StatusBadge";
 
 interface ApprovalCardProps {
-  approval: {
-    id: string;
-    execution_id: string;
-    checkpoint_name: string;
-    payload: Record<string, unknown>;
-    status: string;
-    reason?: string;
-    created_at: string;
-  };
+  execution: AgentExecution;
 }
 
-export function ApprovalCard({ approval }: ApprovalCardProps) {
+export function ApprovalCard({ execution }: ApprovalCardProps) {
   const [reason, setReason] = useState("");
   const decide = useDecideApproval();
 
-  const isPending = approval.status === "pending";
+  const agentName = (execution.metadata?.agent_name as string) || "Agent";
+  const isPending = execution.status === "waiting_approval";
 
   return (
     <div className="rounded-lg border border-border bg-card p-4">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm font-medium">{approval.checkpoint_name}</p>
+          <p className="text-sm font-medium">{agentName}</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {timeAgo(approval.created_at)}
+            {timeAgo(execution.created_at)}
           </p>
         </div>
-        <StatusBadge status={approval.status} />
+        <StatusBadge status={execution.status} />
       </div>
 
-      {approval.payload && Object.keys(approval.payload).length > 0 && (
+      {execution.approval_expires_at && (
+        <p className="mt-2 text-xs text-amber-600 dark:text-amber-400">
+          Expires {timeAgo(execution.approval_expires_at)}
+        </p>
+      )}
+
+      {execution.input && Object.keys(execution.input).length > 0 && (
         <pre className="mt-3 max-h-32 overflow-auto rounded bg-muted p-2 text-xs">
-          {JSON.stringify(approval.payload, null, 2)}
+          {JSON.stringify(execution.input, null, 2)}
         </pre>
       )}
 
@@ -52,8 +52,8 @@ export function ApprovalCard({ approval }: ApprovalCardProps) {
             <button
               onClick={() =>
                 decide.mutate({
-                  id: approval.id,
-                  decision: "approved",
+                  id: execution.id,
+                  decision: "approve",
                   reason: reason || undefined,
                 })
               }
@@ -65,22 +65,18 @@ export function ApprovalCard({ approval }: ApprovalCardProps) {
             <button
               onClick={() =>
                 decide.mutate({
-                  id: approval.id,
-                  decision: "rejected",
+                  id: execution.id,
+                  decision: "deny",
                   reason: reason || undefined,
                 })
               }
               disabled={decide.isPending}
               className="flex-1 rounded-md bg-red-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-50"
             >
-              Reject
+              Deny
             </button>
           </div>
         </div>
-      )}
-
-      {approval.reason && (
-        <p className="mt-2 text-xs text-muted-foreground">Reason: {approval.reason}</p>
       )}
     </div>
   );

@@ -1,23 +1,6 @@
+import type { Trace } from "@promptrails/sdk";
 import { useState } from "react";
 import { TraceSpan } from "./TraceSpan";
-
-interface Trace {
-  id: string;
-  span_id: string;
-  parent_span_id: string;
-  name: string;
-  kind: string;
-  status: string;
-  input?: Record<string, unknown>;
-  output?: Record<string, unknown>;
-  duration_ms?: number;
-  cost?: number;
-  prompt_tokens?: number;
-  completion_tokens?: number;
-  total_tokens?: number;
-  error_message: string;
-  started_at: string;
-}
 
 interface TraceTreeProps {
   traces: Trace[];

@@ -1,43 +1,23 @@
-import { useState } from "react";
-import type { ApprovalRequest } from "@promptrails/sdk";
+import type { AgentExecution } from "@promptrails/sdk";
+import { ApprovalCard } from "../components/ApprovalCard";
 import { useApprovals } from "../hooks/useApprovals";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
-import { ApprovalCard } from "../components/ApprovalCard";
-
-const statusTabs = [
-  { value: "pending", label: "Pending" },
-  { value: "approved", label: "Approved" },
-  { value: "rejected", label: "Rejected" },
-];
 
 export default function Approvals() {
-  const [statusFilter, setStatusFilter] = useState("pending");
   const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useApprovals(statusFilter);
+    useApprovals();
 
   const sentinelRef = useInfiniteScroll(fetchNextPage, hasNextPage, isFetchingNextPage);
 
-  const approvals = data?.pages.flatMap((page) => page.data) ?? [];
+  const executions = data?.pages.flatMap((page) => page.data) ?? [];
 
   return (
     <div className="flex h-full flex-col">
       <div className="border-b border-border px-4 py-3">
         <h1 className="text-sm font-semibold">Approvals</h1>
-        <div className="mt-2 flex gap-1">
-          {statusTabs.map((tab) => (
-            <button
-              key={tab.value}
-              onClick={() => setStatusFilter(tab.value)}
-              className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
-                statusFilter === tab.value
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-accent"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Executions waiting on a human decision
+        </p>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
@@ -53,15 +33,15 @@ export default function Approvals() {
           </p>
         )}
 
-        {!isLoading && approvals.length === 0 && (
+        {!isLoading && executions.length === 0 && (
           <p className="py-8 text-center text-sm text-muted-foreground">
-            No {statusFilter} approvals
+            No executions waiting for approval
           </p>
         )}
 
         <div className="space-y-3">
-          {approvals.map((approval: ApprovalRequest) => (
-            <ApprovalCard key={approval.id} approval={approval} />
+          {executions.map((execution: AgentExecution) => (
+            <ApprovalCard key={execution.id} execution={execution} />
           ))}
         </div>
 
