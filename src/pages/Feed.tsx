@@ -15,10 +15,9 @@ const statusOptions = [
 
 export default function Feed() {
   const [statusFilter, setStatusFilter] = useState("");
-  const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useExecutions({
-      status: statusFilter || undefined,
-    });
+  const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useExecutions({
+    status: statusFilter || undefined,
+  });
 
   const sentinelRef = useInfiniteScroll(fetchNextPage, hasNextPage, isFetchingNextPage);
 
@@ -49,15 +48,11 @@ export default function Feed() {
         )}
 
         {error && (
-          <p className="px-4 py-8 text-center text-sm text-red-500">
-            Failed to load executions
-          </p>
+          <p className="px-4 py-8 text-center text-sm text-red-500">Failed to load executions</p>
         )}
 
         {!isLoading && executions.length === 0 && (
-          <p className="px-4 py-8 text-center text-sm text-muted-foreground">
-            No executions found
-          </p>
+          <p className="px-4 py-8 text-center text-sm text-muted-foreground">No executions found</p>
         )}
 
         {executions.map((execution: AgentExecution) => (

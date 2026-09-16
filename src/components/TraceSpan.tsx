@@ -1,6 +1,6 @@
+import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
-import { formatDuration, formatCost, formatTokens, cn } from "../lib/utils";
-import { ChevronRight, ChevronDown } from "lucide-react";
+import { cn, formatCost, formatDuration, formatTokens } from "../lib/utils";
 
 interface TraceSpanProps {
   trace: {
@@ -30,17 +30,10 @@ const kindColors: Record<string, string> = {
   retrieval: "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400",
 };
 
-export function TraceSpan({
-  trace,
-  depth,
-  hasChildren,
-  expanded,
-  onToggle,
-}: TraceSpanProps) {
+export function TraceSpan({ trace, depth, hasChildren, expanded, onToggle }: TraceSpanProps) {
   const [showDetail, setShowDetail] = useState(false);
   const kindClass =
-    kindColors[trace.kind] ||
-    "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400";
+    kindColors[trace.kind] || "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400";
 
   return (
     <div>
@@ -61,12 +54,7 @@ export function TraceSpan({
 
         <span className="min-w-0 flex-1 truncate text-sm">{trace.name}</span>
 
-        <span
-          className={cn(
-            "shrink-0 rounded px-1.5 py-0.5 text-[10px] font-medium",
-            kindClass,
-          )}
-        >
+        <span className={cn("shrink-0 rounded px-1.5 py-0.5 text-[10px] font-medium", kindClass)}>
           {trace.kind}
         </span>
 
@@ -75,9 +63,7 @@ export function TraceSpan({
         </span>
 
         {trace.cost ? (
-          <span className="shrink-0 text-xs text-muted-foreground">
-            {formatCost(trace.cost)}
-          </span>
+          <span className="shrink-0 text-xs text-muted-foreground">{formatCost(trace.cost)}</span>
         ) : null}
 
         {trace.total_tokens ? (
@@ -86,9 +72,7 @@ export function TraceSpan({
           </span>
         ) : null}
 
-        {trace.error_message && (
-          <span className="h-2 w-2 shrink-0 rounded-full bg-red-500" />
-        )}
+        {trace.error_message && <span className="h-2 w-2 shrink-0 rounded-full bg-red-500" />}
       </button>
 
       {showDetail && (

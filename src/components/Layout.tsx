@@ -44,15 +44,10 @@ function TrayStatusManager() {
 
     const items = firstPage.data;
     const currentIds = new Set(items.map((a: { id: string }) => a.id));
-    const newCount = items.filter(
-      (a: { id: string }) => !prevApprovalIds.current.has(a.id),
-    ).length;
+    const newCount = items.filter((a: { id: string }) => !prevApprovalIds.current.has(a.id)).length;
 
     if (newCount > 0 && prevApprovalIds.current.size > 0 && notifPrefs.approvals) {
-      notify(
-        "Approval Required",
-        `${newCount} new approval${newCount > 1 ? "s" : ""} pending`,
-      );
+      notify("Approval Required", `${newCount} new approval${newCount > 1 ? "s" : ""} pending`);
     }
 
     prevApprovalIds.current = currentIds;
@@ -67,13 +62,9 @@ function TrayStatusManager() {
     const firstPage = executions?.pages?.[0];
     if (!firstPage?.data) return;
 
-    const failedExecs = firstPage.data.filter(
-      (e: { status: string }) => e.status === "failed",
-    );
+    const failedExecs = firstPage.data.filter((e: { status: string }) => e.status === "failed");
     const currentFailedIds = new Set(failedExecs.map((e: { id: string }) => e.id));
-    const newFailures = failedExecs.filter(
-      (e: { id: string }) => !prevFailedIds.current.has(e.id),
-    );
+    const newFailures = failedExecs.filter((e: { id: string }) => !prevFailedIds.current.has(e.id));
 
     if (newFailures.length > 0 && prevFailedIds.current.size > 0 && notifPrefs.failures) {
       notify(

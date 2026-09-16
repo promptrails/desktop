@@ -20,9 +20,7 @@ export function ApprovalCard({ execution }: ApprovalCardProps) {
       <div className="flex items-start justify-between">
         <div>
           <p className="text-sm font-medium">{agentName}</p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            {timeAgo(execution.created_at)}
-          </p>
+          <p className="mt-1 text-xs text-muted-foreground">{timeAgo(execution.created_at)}</p>
         </div>
         <StatusBadge status={execution.status} />
       </div>

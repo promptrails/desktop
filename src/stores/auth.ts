@@ -73,9 +73,7 @@ export async function getNotificationPrefs(): Promise<{
 }> {
   try {
     const store = await getStore();
-    const prefs = await store.get<{ approvals: boolean; failures: boolean }>(
-      "notifications",
-    );
+    const prefs = await store.get<{ approvals: boolean; failures: boolean }>("notifications");
     return prefs || { approvals: true, failures: true };
   } catch {
     return { approvals: true, failures: true };

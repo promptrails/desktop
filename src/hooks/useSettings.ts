@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPollingInterval, getNotificationPrefs } from "../stores/auth";
+import { getNotificationPrefs, getPollingInterval } from "../stores/auth";
 
 export function usePollingInterval(): number {
   const [interval, setInterval_] = useState(60000);

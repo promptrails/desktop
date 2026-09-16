@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import {
-  getApiUrl,
-  getPollingInterval,
-  setPollingInterval,
-  getNotificationPrefs,
-  setNotificationPrefs,
-  clearAuth,
-} from "../stores/auth";
+import { useEffect, useState } from "react";
 import { resetClient } from "../lib/api";
+import {
+  clearAuth,
+  getApiUrl,
+  getNotificationPrefs,
+  getPollingInterval,
+  setNotificationPrefs,
+  setPollingInterval,
+} from "../stores/auth";
 
 const pollingOptions = [
   { value: 60000, label: "1 minute" },
@@ -68,9 +68,7 @@ export default function Settings() {
         <div className="space-y-5">
           {/* Connection info */}
           <section>
-            <h2 className="mb-3 text-xs font-medium uppercase text-muted-foreground">
-              Connection
-            </h2>
+            <h2 className="mb-3 text-xs font-medium uppercase text-muted-foreground">Connection</h2>
             <div className="rounded-md border border-border bg-muted/50 px-3 py-2">
               <p className="text-xs text-muted-foreground">API URL</p>
               <p className="font-mono text-sm">{apiUrl}</p>

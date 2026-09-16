@@ -26,27 +26,18 @@ function ExecutionNode({
         className="flex w-full items-center gap-2 px-3 py-2 text-left transition-colors hover:bg-accent/50"
         style={{ paddingLeft: `${depth * 20 + 12}px` }}
       >
-        {depth > 0 && (
-          <CornerDownRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
-        )}
+        {depth > 0 && <CornerDownRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />}
         <span className="min-w-0 flex-1 truncate text-sm">{agentName}</span>
         <StatusBadge status={node.status} />
         <span className="shrink-0 text-xs text-muted-foreground">
           {formatDuration(node.duration_ms)}
         </span>
         {node.cost ? (
-          <span className="shrink-0 text-xs text-muted-foreground">
-            {formatCost(node.cost)}
-          </span>
+          <span className="shrink-0 text-xs text-muted-foreground">{formatCost(node.cost)}</span>
         ) : null}
       </button>
       {node.children?.map((child) => (
-        <ExecutionNode
-          key={child.id}
-          node={child}
-          depth={depth + 1}
-          onSelect={onSelect}
-        />
+        <ExecutionNode key={child.id} node={child} depth={depth + 1} onSelect={onSelect} />
       ))}
     </div>
   );
@@ -69,9 +60,7 @@ export default function ExecutionDetail() {
 
   if (!execution) {
     return (
-      <p className="px-4 py-8 text-center text-sm text-muted-foreground">
-        Execution not found
-      </p>
+      <p className="px-4 py-8 text-center text-sm text-muted-foreground">Execution not found</p>
     );
   }
 
@@ -113,9 +102,7 @@ export default function ExecutionDetail() {
           <div className="mt-3 grid grid-cols-2 gap-3">
             <div>
               <p className="text-[10px] uppercase text-muted-foreground">Duration</p>
-              <p className="text-sm font-medium">
-                {formatDuration(execution.duration_ms)}
-              </p>
+              <p className="text-sm font-medium">{formatDuration(execution.duration_ms)}</p>
             </div>
             <div>
               <p className="text-[10px] uppercase text-muted-foreground">Cost</p>
@@ -165,9 +152,7 @@ export default function ExecutionDetail() {
         {/* Execution tree (sub-agents / handoffs / workflow nodes) */}
         {hasChildren && (
           <div className="border-b border-border px-4 py-3">
-            <p className="mb-2 text-xs font-medium text-muted-foreground">
-              Sub-executions
-            </p>
+            <p className="mb-2 text-xs font-medium text-muted-foreground">Sub-executions</p>
             <div className="divide-y divide-border rounded-lg border border-border">
               <ExecutionNode
                 node={execution}
@@ -188,9 +173,7 @@ export default function ExecutionDetail() {
           ) : traces && traces.length > 0 ? (
             <TraceTree traces={traces} />
           ) : (
-            <p className="py-4 text-center text-xs text-muted-foreground">
-              No trace data
-            </p>
+            <p className="py-4 text-center text-xs text-muted-foreground">No trace data</p>
           )}
         </div>
       </div>

@@ -43,9 +43,7 @@ function TreeNodeRow({ node, depth }: { node: TreeNode; depth: number }) {
         onToggle={() => setExpanded(!expanded)}
       />
       {expanded &&
-        node.children.map((child) => (
-          <TreeNodeRow key={child.id} node={child} depth={depth + 1} />
-        ))}
+        node.children.map((child) => <TreeNodeRow key={child.id} node={child} depth={depth + 1} />)}
     </div>
   );
 }
@@ -55,9 +53,7 @@ export function TraceTree({ traces }: TraceTreeProps) {
 
   if (tree.length === 0) {
     return (
-      <p className="py-8 text-center text-sm text-muted-foreground">
-        No trace data available
-      </p>
+      <p className="py-8 text-center text-sm text-muted-foreground">No trace data available</p>
     );
   }
 

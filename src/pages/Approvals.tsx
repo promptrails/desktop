@@ -4,8 +4,7 @@ import { useApprovals } from "../hooks/useApprovals";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 
 export default function Approvals() {
-  const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useApprovals();
+  const { data, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useApprovals();
 
   const sentinelRef = useInfiniteScroll(fetchNextPage, hasNextPage, isFetchingNextPage);
 
@@ -15,9 +14,7 @@ export default function Approvals() {
     <div className="flex h-full flex-col">
       <div className="border-b border-border px-4 py-3">
         <h1 className="text-sm font-semibold">Approvals</h1>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Executions waiting on a human decision
-        </p>
+        <p className="mt-1 text-xs text-muted-foreground">Executions waiting on a human decision</p>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
@@ -27,11 +24,7 @@ export default function Approvals() {
           </div>
         )}
 
-        {error && (
-          <p className="py-8 text-center text-sm text-red-500">
-            Failed to load approvals
-          </p>
-        )}
+        {error && <p className="py-8 text-center text-sm text-red-500">Failed to load approvals</p>}
 
         {!isLoading && executions.length === 0 && (
           <p className="py-8 text-center text-sm text-muted-foreground">

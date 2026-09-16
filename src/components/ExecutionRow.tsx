@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import { formatCost, formatDuration, timeAgo } from "../lib/utils";
 import { StatusBadge } from "./StatusBadge";
-import { formatDuration, formatCost, timeAgo } from "../lib/utils";
 
 interface ExecutionRowProps {
   execution: {

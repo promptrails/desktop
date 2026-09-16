@@ -27,17 +27,12 @@ export default function Stats() {
   }
 
   if (error || !summary) {
-    return (
-      <p className="px-4 py-8 text-center text-sm text-red-500">Failed to load stats</p>
-    );
+    return <p className="px-4 py-8 text-center text-sm text-red-500">Failed to load stats</p>;
   }
 
   const successRate =
     summary.total_traces > 0
-      ? (
-          ((summary.total_traces - summary.error_count) / summary.total_traces) *
-          100
-        ).toFixed(1)
+      ? (((summary.total_traces - summary.error_count) / summary.total_traces) * 100).toFixed(1)
       : "0";
 
   return (

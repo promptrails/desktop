@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { PromptRails } from "@promptrails/sdk";
-import { setApiKey, setApiUrl } from "../stores/auth";
+import { useState } from "react";
 import { initClient } from "../lib/api";
+import { setApiKey, setApiUrl } from "../stores/auth";
 
 interface SetupProps {
   onConnected: () => void;
@@ -42,9 +42,7 @@ export default function Setup({ onConnected }: SetupProps) {
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold">PromptRails Monitor</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Enter your API key to get started
-          </p>
+          <p className="mt-2 text-sm text-muted-foreground">Enter your API key to get started</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">

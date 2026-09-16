@@ -1,15 +1,15 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getApiKey, getApiUrl } from "./stores/auth";
-import { initClient } from "./lib/api";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import Feed from "./pages/Feed";
-import ExecutionDetail from "./pages/ExecutionDetail";
+import { initClient } from "./lib/api";
 import Approvals from "./pages/Approvals";
-import Stats from "./pages/Stats";
+import ExecutionDetail from "./pages/ExecutionDetail";
+import Feed from "./pages/Feed";
 import Settings from "./pages/Settings";
-import TrayPanel from "./pages/TrayPanel";
 import Setup from "./pages/Setup";
+import Stats from "./pages/Stats";
+import TrayPanel from "./pages/TrayPanel";
+import { getApiKey, getApiUrl } from "./stores/auth";
 
 export default function App() {
   const [ready, setReady] = useState<boolean | null>(null);

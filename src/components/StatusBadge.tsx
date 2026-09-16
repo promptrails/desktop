@@ -3,8 +3,7 @@ import { cn } from "../lib/utils";
 const statusConfig: Record<string, { label: string; className: string }> = {
   completed: {
     label: "Success",
-    className:
-      "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+    className: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
   },
   failed: {
     label: "Failed",
