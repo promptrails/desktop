@@ -35,11 +35,9 @@ In dev mode, API requests go through Vite's proxy to avoid CORS issues:
 | `pnpm build` | Build frontend (TypeScript + Vite) |
 | `pnpm tauri build` | Build production app (all platforms) |
 | `pnpm typecheck` | TypeScript type checking |
-| `pnpm lint` | ESLint |
-| `pnpm lint:fix` | ESLint with auto-fix |
-| `pnpm format` | Prettier format |
-| `pnpm format:check` | Prettier check |
-| `pnpm validate` | Run all checks (typecheck + lint + format) |
+| `pnpm check` | Biome (format + lint + import order) |
+| `pnpm check:fix` | Biome with auto-fix |
+| `pnpm validate` | Run all checks (typecheck + Biome) |
 
 ## Project Structure
 
@@ -76,4 +74,4 @@ desktop/
 | API | @promptrails/sdk |
 | State | TanStack Query |
 | Charts | Recharts |
-| Linting | ESLint + Prettier |
+| Linting | Biome |
