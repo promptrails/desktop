@@ -50,21 +50,29 @@
         "useAltText": "off",
         "noRedundantAlt": "off"
       },
+      "complexity": {
+        "noBannedTypes": "error"
+      },
       "suspicious": {
         "noAssignInExpressions": "off",
         "noArrayIndexKey": "off",
         "noImplicitAnyLet": "off",
         "noDocumentCookie": "off",
         "noThenProperty": "off",
-        "useIterableCallbackReturn": "off"
+        "useIterableCallbackReturn": "off",
+        "noExplicitAny": "error"
       },
       "style": {
         "noNonNullAssertion": "off",
-        "useComponentExportOnlyModules": "warn"
+        "useComponentExportOnlyModules": "warn",
+        "useAsConstAssertion": "error"
       },
       "correctness": {
         "useExhaustiveDependencies": "warn",
-        "useHookAtTopLevel": "error"
+        "useHookAtTopLevel": "error",
+        "noUnusedVariables": "error",
+        "noUnusedFunctionParameters": "error",
+        "noUnusedImports": "error"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
