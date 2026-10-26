@@ -28,16 +28,16 @@ In dev mode, API requests go through Vite's proxy to avoid CORS issues:
 
 ## Scripts
 
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Start Vite dev server only |
-| `pnpm tauri dev` | Start full Tauri app in dev mode |
-| `pnpm build` | Build frontend (TypeScript + Vite) |
+| Script             | Description                          |
+| ------------------ | ------------------------------------ |
+| `pnpm dev`         | Start Vite dev server only           |
+| `pnpm tauri dev`   | Start full Tauri app in dev mode     |
+| `pnpm build`       | Build frontend (TypeScript + Vite)   |
 | `pnpm tauri build` | Build production app (all platforms) |
-| `pnpm typecheck` | TypeScript type checking |
-| `pnpm check` | Biome (format + lint + import order) |
-| `pnpm check:fix` | Biome with auto-fix |
-| `pnpm validate` | Run all checks (typecheck + Biome) |
+| `pnpm typecheck`   | TypeScript type checking             |
+| `pnpm check`       | Biome (format + lint + import order) |
+| `pnpm check:fix`   | Biome with auto-fix                  |
+| `pnpm validate`    | Run all checks (typecheck + Biome)   |
 
 ## Project Structure
 
@@ -66,12 +66,12 @@ desktop/
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Shell | Tauri v2 |
-| Frontend | React 18 + Vite |
-| Styling | Tailwind CSS |
-| API | @promptrails/sdk |
-| State | TanStack Query |
-| Charts | Recharts |
-| Linting | Biome |
+| Layer    | Technology       |
+| -------- | ---------------- |
+| Shell    | Tauri v2         |
+| Frontend | React 18 + Vite  |
+| Styling  | Tailwind CSS     |
+| API      | @promptrails/sdk |
+| State    | TanStack Query   |
+| Charts   | Recharts         |
+| Linting  | Biome            |

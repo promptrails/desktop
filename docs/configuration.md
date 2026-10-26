@@ -14,11 +14,11 @@ By default, the app connects to `https://api.promptrails.ai`. For self-hosted in
 
 Available in the **Settings** tab:
 
-| Setting | Options | Default |
-|---------|---------|---------|
-| Polling Interval | 1 min, 2 min, 5 min, 10 min | 1 minute |
-| Approval Notifications | On / Off | On |
-| Failure Notifications | On / Off | On |
+| Setting                | Options                     | Default  |
+| ---------------------- | --------------------------- | -------- |
+| Polling Interval       | 1 min, 2 min, 5 min, 10 min | 1 minute |
+| Approval Notifications | On / Off                    | On       |
+| Failure Notifications  | On / Off                    | On       |
 
 ## Disconnect
 
@@ -32,9 +32,9 @@ For local development, you can set credentials via `.env` instead of the setup s
 cp .env.example .env
 ```
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `VITE_API_URL` | `https://api.promptrails.ai` | API base URL |
-| `VITE_API_KEY` | — | API key (skips setup screen if set) |
+| Variable       | Default                      | Description                         |
+| -------------- | ---------------------------- | ----------------------------------- |
+| `VITE_API_URL` | `https://api.promptrails.ai` | API base URL                        |
+| `VITE_API_KEY` | —                            | API key (skips setup screen if set) |
 
 When `VITE_API_KEY` is set, it takes precedence over the stored key.

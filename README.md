@@ -16,12 +16,12 @@ Desktop monitoring app for PromptRails AI agent executions.
 
 ## Screenshots
 
-| Tray Panel | Execution Feed | Stats Dashboard |
-|:---:|:---:|:---:|
+|              Tray Panel              |        Execution Feed         |         Stats Dashboard         |
+| :----------------------------------: | :---------------------------: | :-----------------------------: |
 | ![Tray Panel](screenshots/panel.png) | ![Feed](screenshots/feed.png) | ![Stats](screenshots/stats.png) |
 
-| Approvals | Settings |
-|:---:|:---:|
+|                Approvals                |               Settings                |
+| :-------------------------------------: | :-----------------------------------: |
 | ![Approvals](screenshots/approvals.png) | ![Settings](screenshots/settings.png) |
 
 ## Installation
@@ -36,12 +36,12 @@ brew install --cask promptrails/tap/promptrails-monitor
 
 Download the latest release from [GitHub Releases](https://github.com/promptrails/desktop/releases):
 
-| Platform | Format |
-|----------|--------|
-| macOS (Apple Silicon) | `.dmg` |
-| macOS (Intel) | `.dmg` |
-| Windows | `.msi` / `.exe` |
-| Linux | `.AppImage` / `.deb` |
+| Platform              | Format               |
+| --------------------- | -------------------- |
+| macOS (Apple Silicon) | `.dmg`               |
+| macOS (Intel)         | `.dmg`               |
+| Windows               | `.msi` / `.exe`      |
+| Linux                 | `.AppImage` / `.deb` |
 
 See [docs/](docs/) for configuration, development, and build-from-source guides.
 
