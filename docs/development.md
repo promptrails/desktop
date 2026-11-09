@@ -23,6 +23,7 @@ pnpm tauri dev
 This starts both the Vite dev server (port 1420) and the Tauri app. Hot module replacement is enabled for the React frontend.
 
 In dev mode, API requests go through Vite's proxy to avoid CORS issues:
+
 - Frontend fetches `http://localhost:1420/api/...`
 - Vite proxies to `VITE_API_URL` (e.g., `http://localhost:8082`)
 
